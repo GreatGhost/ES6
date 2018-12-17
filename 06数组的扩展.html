@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>新闻媒体开发端，作为最细新闻媒体开发端，作为最细新闻媒体开发端，作为最细新闻媒体开发端，作为最细新闻媒体开发端，作为最细新闻媒体开发端，作为最细新闻媒体开发端，作为最细新闻媒体开发端，作为最细新闻媒体开发端，作为最细新闻媒体开发端，作为最细</p>
+    <script>
+        // ES5 的写法
+        Math.max.apply(null, [14, 3, 77])
+
+        // ES6 的写法
+        Math.max(...[14, 3, 77])
+
+        // 等同于
+        Math.max(14, 3, 77);
+
+        // ES5的 写法
+        var arr1 = [0, 1, 2];
+        var arr2 = [3, 4, 5];
+        Array.prototype.push.apply(arr1, arr2);
+
+        // ES6 的写法
+        /* let arr1 = [0, 1, 2];
+        let arr2 = [3, 4, 5];
+        arr1.push(...arr2); */
+
+        /*复制数组  指向底层数据结构的指针，而不是克隆一个全新的数组*/
+        let arr3 = [1, 2];
+        let arr4 = [];
+        arr4 = arr3;
+        arr4[0] = 5;
+        console.log(arr3);
+
+        let arr5 = [1, 2, 3, 4, 5, 7];
+        arr5.pop();
+        console.log(arr5);
+
+        //复制数组的变通方式
+        var arr6 = [1, 2];
+        var arr7 = arr6.concat();
+        arr7[1] = 10;
+        console.log(arr7);
+        console.log(arr6);
+        //复制数组的第二种方法
+        var arr9 = [1, 2];
+        var arr10 = [...arr9];
+
+        /*  2.合并数组 */
+        var arr11 = [1];
+        var arr12 = [1, 2];
+        var arr13 = [1, 2, 3];
+        //arr11.concat(arr12,arr13);
+        console.log(arr11.concat(arr12, arr13));
+        console.log([...arr11, ...arr12, ...arr13]);
+
+
+        /* 3与结构赋值结合 */
+        var arr14 = [1, 2, 3, 5];
+        console.log(arr14.slice(1)); //获取数组指定位置的值
+        var [x15, ...arr15] = [1, 2, 4, 5];
+        console.log(x15);
+
+        /*扩展运算符只能放在结构赋值最后面
+ 
+  const [first, ...rest] = [];
+first // undefined
+rest  // []
+
+const [first, ...rest] = ["foo"];
+first  // "foo"
+rest   // []
+
+ */
+        /* 4.字符串*/
+        var arr16 = [...'hello'];
+        console.log(arr16);
+
+
+        /* Map和Set结构 */
+// NodeList对象
+let ps = document.querySelectorAll('p');
+Array.from(ps).filter(p => {
+  return p.textContent.length > 100;
+});
+console.log(Array.from(ps).filter(p => {
+  return p.textContent.length > 100;
+}))
+        /* array的forEach方法 filter map every some 
+        
+            Array.prototype.slice.call(null,arguments);
+            Math.max.apply(null,[1,2,3,4,5]);
+        */
+        console.log(Math.max.apply(null,[1,2,3,25,36]));
+
+        
+    </script>
+</body>
+
+</html>

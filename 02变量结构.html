@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>变量结构</title>
+</head>
+<body>
+	<script type="text/javascript">
+		
+		var [a,b,c]=[1,2,3];
+		/*模式匹配*/
+		/*let [x, y, z] = new Set(['a', 'b', 'c']);*/
+
+		/*对象的结构赋值*/
+/*		let {name,age}={name:'小明',age:'28'}
+		console.log(name);*/
+	function move({x = 0, y = 0} = {}) {
+  return [x, y];
+}
+
+move({x: 3, y: 8}); // [3, 8]
+move({x: 3}); // [3, 0]
+move({}); // [0, 0]
+move(); // [0, 0]
+console.log(move({x:23,y:2}));
+/*1,变量转换*/
+let x = 1;
+let y = 2;
+
+[x, y] = [y, x];
+console.log(x);
+/*2.函数返回多个值[1,2,3,4],{foo:'1412',bar:'23'}*/
+/*3.函数参数定义*/
+let data={"name":"小明"};
+let {name}=data;
+console.log(name);
+/*函数参数的默认值*/
+let foo=function(url,{
+	async=true,
+	beforeSend=true
+}={}){
+	console.log(async);
+}
+foo();
+
+/*遍历 Map 结构*/
+let map=new Map();
+map.set('address','喜福会25路');
+for(let [key,value] of map){
+	console.log(key+value);
+}
+	</script>
+
+</body>
+</html>

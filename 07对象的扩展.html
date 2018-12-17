@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 对象的扩展 */
+        /* 属性的简写 */
+        var x=1;
+        var y=2;
+        var obj={x,y};
+        console.log(obj);
+        /* 对象方法的简写 */
+        var obj={
+            x,
+            y,
+            ms:{},
+            init(){
+                console.log(this.x);
+                return 'hello';
+            },
+            getItem(key){
+                /* key输入必须为字符串 */
+                return key in this?this[key]:null
+            },
+            setItem(key,value){
+                this[key]=value;
+            },
+            clear(){
+                this.ms={};
+            }
+
+        }
+        obj.init();
+        console.log(obj.getItem('x'));
+        function f1(){}
+        function f2(){}
+        function f3(){}
+        //module.exports={f1,f2,f3}
+        /* 
+        等同于
+        module.exports={
+            f1:f1,
+            f2:f2,
+            f3:f3
+        }
+         */
+        //此处存在闭包、立即函数、变量私有化、对象封装
+         var package=(function(){
+             var speed=0;
+             function getSpeed(){
+                 return speed;
+             }
+             function setSpeed(value){
+                 if(value<speed){
+                     throw new Error('设置速度的值过小');
+                 }
+                 speed=value;
+             }
+             return {
+                 getSpeed,
+                 setSpeed
+             }
+         })();
+
+         console.log(package.getSpeed());
+         package.setSpeed(25);
+         console.log(package.getSpeed());
+
+
+         /* 属性的表达方式 */
+
+         /* 属性可枚举性 */
+         /* 
+            for in
+            Object.keys();
+            JSON.stringify();
+            Object.assign({},obj1,obj2);
+          */
+    </script>
+</body>
+</html>

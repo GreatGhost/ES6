@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>函数的扩展</title>
+</head>
+
+<body>
+	<button id="btn">按钮</button>
+	<script type="text/javascript">
+		// 函数参数默认值
+		/*默认值不能再let const赋值 默认值的好处是：1.告诉开发者，该值是默认值*/
+		function foo(x = 1, y = 2) {}
+
+		function foo2({
+			x,
+			y = 1
+		}) {
+			console.log(x, y);
+		}
+		foo2({
+			x: 5,
+			y: 2
+		});
+		foo2({});
+		//报错foo2();
+		function foo3({
+			x,
+			y = 3
+		} = {}) {
+			console.log(x, y);
+		}
+		foo3()
+
+		function fetch(url, {
+			body = 'https://',
+			method = 'GET',
+			port = 8080
+		} = {}) {
+			console.log(url + body + method + ':' + port);
+		}
+		fetch();
+		/*解释下foo4和foo5的区别 传了两个参数 x y*/
+		function foo4({
+			x = 0,
+			y = 0
+		} = {}) {
+			return [x, y];
+		}
+
+		function foo5({
+			x,
+			y
+		} = {
+			x: 1,
+			y: 0
+		}) {
+			return [x, y];
+		}
+		/*foo5({}) foo5() foo5({x:1}) foo5({x:1,y:2})*/
+		let [result1, result2] = foo5({});
+		console.log(result1);
+		foo5();
+
+		/*默认参数设置后，函数作用域产生单独作用域*/
+		function foo6(x, y = x) {
+			console.log(y);
+		}
+		foo6(5); //此处5是参数x的定义，但是y获取到默认参数为5；此处如果function foo6(y=x){}  x未定义，name或报错
+
+		/*参数是一个函数的时候*/
+		let foo7 = 'outer';
+
+		function bar(func = () => foo7) {
+			let foo7 = 'inner';
+			console.log(func());
+		}
+
+		bar(); // outer
+
+		// 复杂的单独作用域
+		/* 二重点rest参数的写法 此处加入es6函数写法*/
+
+		/* rest参数后，不能 有其它参数 */
+
+
+		function sort() {
+			/* 参数变量转数组 */
+			return Array.prototype.slice.call(arguments).sort(function (a, b) {
+				return a - b;
+			});
+		}
+
+		function sort2(...numbers) {
+			return numbers.sort(function (a, b) {
+				return a - b;
+			});
+		}
+		let sort3 = (...numbers) => numbers.sort((a, b) => a - b);
+		console.log(sort3(1, 2, 3, 5, 6, 102, 1, 2));
+		/* 严格模式 use strict 默认值、结构赋值、扩展运算符 */
+
+		/* 函数的name */
+
+		/* es6箭头函数 */
+		/* 箭头函数组成 （）=>{}*/
+		var foo8 = res => res;
+		var foo9 = (a, b, c) => a + b + c;
+		var foo10 = (a, b, c) => {
+			if (a > b || a > c) {
+				return a;
+			}
+		}
+		//返回是一个对象是，必须用括号扩起来
+		var foo11 = (id, name, age) => ({
+			name: name,
+			age: age
+		})
+		console.log(foo11(25, '小明', 25));
+		//箭头函数和解构赋值结合
+		var foo12 = ({
+			id,
+			name,
+			age
+		}) => id + name + '' + age;
+		/* 
+			function foo12(id,name,age){
+				return id+name+''+age;
+			}
+		 */
+		var foo13 = n => n * n;
+		console.log([1, 2, 3, 5].map(x => x * x));
+
+		/* 箭头函数注意事项 */
+
+		/* 
+		 （1）函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。
+
+			（2）不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。
+
+			（3）不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用 rest 参数代替。
+
+			（4）不可以使用yield命令，因此箭头函数不能用作 Generator 函数。
+
+			*/
+		function Foo14() {
+			this.s1 = 0;
+			this.s2 = 0;
+			this.count = 0;
+			var timeId = setInterval(function () {
+				if (this.count > 5) {
+					clearInterval(timeId)
+				} else {
+					this.s1 += 1;
+					this.count++;
+				}
+			}, 1000);
+			var timeId2 = setInterval(() => {
+				if (this.count > 5) {
+					clearInterval(timeId2)
+				} else {
+					this.s2++;
+					this.count++;
+				}
+			})
+
+		}
+		var foo14 = new Foo14();
+		setTimeout(() => console.log(foo14.s2), 5100);
+
+		//箭头函数可以让this指向固定化
+		//箭头函数内部没有自己的this,所以它不能作为构造函数;
+		//封装DOM
+
+		var handler = {
+			id: '1234',
+			init: function () {
+				document.addEventListener('click', event =>
+					this.dosome(event.type), false
+				)
+			},
+			dosome: function (type) {
+				console.log(type);
+			}
+		}
+
+		handler.init();
+		// ES5
+		function foo15() {
+			var _this = this;
+
+			setTimeout(function () {
+				console.log('id:', _this.id);
+			}, 100);
+		}
+		/* 以下三个在箭头函数下不存在  arguments super target */
+
+		/* 箭头函数不合适的场景：函数内包括this,动态this*/
+		var btn=document.getElementById('btn');
+		btn.addEventListener('click',function(){
+			console.log(this);
+		});
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对象新增方法</title>
+</head>
+<body>
+	<script type="text/javascript">
+
+		//Object.is({},{})笔记两个值是否相等
+		+0 === -0 //true
+		NaN === NaN // false
+
+		Object.is(+0, -0) // false
+		Object.is(NaN, NaN) // true
+
+		//es5定义Object.is()
+		Object.defineProperty(Object, 'is', {
+			  value: function(x, y) {
+			    if (x === y) {
+			      // 针对+0 不等于 -0的情况
+			      return x !== 0 || 1 / x === 1 / y;
+			    }
+			    // 针对NaN的情况
+			    return x !== x && y !== y;
+			  },
+			  configurable: true,
+			  enumerable: false,
+			  writable: true
+			});
+
+		//ES6对象的合并
+		//Object.assign()
+		var obj1={a:1},
+			obj2={a:2},
+			obj3={b:3};
+		Object.assign(obj1,obj2,obj3);
+
+		console.log(obj1);
+		//只有一个参数,直接返回该参数
+		console.log(Object.assign(obj2));
+		//参数不是对象，直接先转化为参数，然后返回：
+		//首参如果是undefined null 会报错;
+		Object.assign({},'abc',true,1);//结果返回{0:'a',1:'b',2:'c'};
+		//
+		var obj4="{a:'123',b:'2'}";
+		var obj5='a'
+		var obj6=1
+		
+		console.log(Object.assign(obj4));
+
+		//了解浅拷贝 和深拷贝的区别
+		//浅拷贝
+		var obj7={a:1,b:2,c:3};
+		var obj8=obj7;
+		console.log(obj8.a);
+		obj7.a=100;
+		console.log(obj8.a);
+		//此处算深拷贝了
+		obj9=Object.assign({},obj7);
+		console.log(obj9);
+		obj7.a=1000;
+		console.log(obj9);
+
+		//对于Object.assign()如果源对象的值是对象，对源对象的值做处理，name拷贝后所赋值的对象，在源对象值发生变化，对象也将变化：
+		//一些函数库提供Object.assign的定制版本（比如 Lodash 的_.defaultsDeep方法），可以得到深拷贝的合并。
+		//assign的用处
+		//对象添加属性、方法
+		/*class Point {
+			  constructor(x, y) {
+			    Object.assign(this, {x, y});
+			  }
+			}
+
+				Object.assign(SomeClass.prototype, {
+		  			someMethod(arg1, arg2) {
+		    			···
+		  			},
+		  			anotherMethod() {
+		    			···
+		  			}
+			});*/
+
+
+		//克隆对象
+		//采用这种方法克隆，只能克隆原始对象自身的值，不能克隆它继承的值。
+		function clone(obj){
+			return Object.assign({},obj);
+		}
+		//如果想要保持继承链，可以采用下面的代码。
+		function clone(origin) {
+  			let originProto = Object.getPrototypeOf(origin);
+  			return Object.assign(Object.create(originProto), origin);
+			}
+		//合并多个对象
+		const merge =(target, ...sources) => Object.assign(target, ...sources);	
+		//属性添加默认值
+		//
+					const DEFAULTS = {
+			  			logLevel: 0,
+			  			outputFormat: 'html'
+						};
+
+			function processContent(options) {
+			  options = Object.assign({}, DEFAULTS, options);
+			  console.log(options);
+			  // ...
+			}
+		//深入理解浅拷贝、深拷贝
+		//
+		//
+		var obj8={a:1,b:2};
+		var obj9={a:obj8.a,b:obj8.b};//此处算深拷贝了
+		obj8.a=100;
+		console.log(obj9);
+		function copy(obj){
+			var obj2={};
+			for(let i in obj){
+				obj2[i]=obj[i];
+			}
+			return obj2;
+		}
+		var obj10={name:'小米',age:25};
+		var obj11=copy(obj10);
+		obj10.age=100;
+		console.log(obj11);
+
+		//递归实现无论是否有嵌套对象或数组，都实现深拷贝
+		function copy2(obj1,obj2){
+			var obj2=obj2||{};
+			for(let name in obj1){
+				if(typeof obj1[name]==='object'){
+					obj2[name]=obj1[name].constructor===Array?[]:{};
+					copy2(obj1[name],obj2[name]);
+				}else{
+					obj2[name]=obj1[name];
+				}
+			}
+			return obj2;
+		}
+		var obj12={name:'小明',age:'23',job:['IT','演员','艺术家','画家']};
+		var obj13=copy2(obj12);
+		obj12.job[2]='军人';
+		console.log(obj12);
+		console.log(obj13);
+		//实现历史记录无重复
+		function updateHistory(arr,item){
+			var index=0;
+			for(let i=0;i<arr.length;i++){
+				if(item.name===arr[i].name){
+					index=i;
+					break;
+				}
+			}
+			arr.splice(index,1);
+			arr.push(item);
+			return arr;
+		}
+		var arr=[{name:'小明',age:1},{name:'小红'},{name:'小v'},{name:'小军'}];
+		arr=updateHistory(arr,{name:'小军'});
+		console.log(arr);
+	</script>
+</body>
+</html>
