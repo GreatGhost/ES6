@@ -22,7 +22,20 @@
 
 	//Map(); set has get 
 	//Object 字符串-值 Map是值-值对应 Map的初略研究
-	
+	if(''&&'wang'){
+		console.log('niu')
+	}else{
+		console.log('cuosu')
+	}
+	console.log(Boolean(''&&'wang'));
+	var reg=/^全[\u4e00-\u9fa5]+[省市]+$/ig;
+	var arr=[{code: "320000", sheng: "32", di: "00", xian: "00", name: "全江苏省"}]
+	console.log(arr.length);
+	if(arr.length==1&&reg.test(arr[0].name)){
+		console.log('ceshi ')
+	}else{
+		console.log('错误');
+	}
 	</script>
 </body>
 </html>
