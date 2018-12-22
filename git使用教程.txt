@@ -71,8 +71,11 @@ git status
 git add 
 git commit
 
+学习内容五
 
+git  跟踪修改 git add git commit 
 
+学习内容六
 
 
 
