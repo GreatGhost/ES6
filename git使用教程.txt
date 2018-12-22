@@ -76,6 +76,9 @@ git commit
 git  跟踪修改 git add git commit 
 
 学习内容六
+撤销修改
+牛掰
+
 
 
 
