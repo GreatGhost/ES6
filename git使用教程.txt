@@ -55,3 +55,26 @@ promise.resolve
 promise.reject
 
 
+学习内容三
+时光穿梭机
+
+git reset --hard commitid
+git reset --hard HEAD^返回上一个版本
+git log 
+git reflog
+
+
+学习内容四
+工作区 版本库 
+
+git status 
+git add 
+git commit
+
+
+
+
+
+
+
+
