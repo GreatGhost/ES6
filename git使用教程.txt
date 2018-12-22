@@ -1,0 +1,57 @@
+1.本篇结合ES6的学习和Git版本管理的了解
+2018.12.22学习内容一
+
+
+今天Git学习内容
+git init 创建版本库
+git add .
+git add read.txt me.txt 25.html
+
+git commit -u '内容'
+
+还可以使用GIT ui 进行版本管理
+
+
+2018.12.22
+学习内容二
+ES6 的promise
+1.new Promise(function(resolve,reject){
+	resolve(1)
+	if(n<10){
+	reject(new Error('输入内容有误'))
+	}
+})
+
+function getUser(){
+	return new Promise(function(resolve,reject){
+	resolve(1);	
+}).then(res=>{
+	return res*10002;
+}).then(res=>{
+	return res.toString().split('')
+})
+)
+}
+
+function getData(n){
+	return new Promise(function(resolve,reject){
+		if(n<100){
+			resolve(n)
+}else{
+	reject(n-100);
+}
+})
+}
+
+getData(88).then(res=>{
+	return new Promise(function(resolve,reject){
+	resolve(res);
+})
+})
+
+promise.all 
+promise.race
+promise.resolve
+promise.reject
+
+
