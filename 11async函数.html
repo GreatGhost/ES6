@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        async function timeout(msg){
+            await new Promise(function(resolve,reject){
+                setTimeout(resolve,msg);
+            })
+        }
+        async function print(value,msg){
+            await timeout(msg);
+            console.log(value)
+        }
+        print('水运码头',2000);
+
+        async function f(){
+            throw new Error('出错了呀')
+        }
+        f().then(v=>{
+            console.log(v)
+        }).catch(err=>{
+            console.log(err)
+        })
+    </script>
+</body>
+</html>
